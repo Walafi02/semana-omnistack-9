@@ -1,4 +1,6 @@
 const Booking = require("../models/Booking");
+const Spot = require("../models/Spot");
+const User = require("../models/User");
 
 module.exports = {
     async store(req, res) {
@@ -12,11 +14,20 @@ module.exports = {
             date
         });
 
-        // await booking
-        //     .populate("spot")
-        //     .populate("user")
-        //     .execPopulate();
+        // await booking.populate("spot").execPopulate();
+        // .populate("user")
 
-        return res.json(booking);
+        const spot = await Spot.findById(spot_id);
+        const user = await User.findById(user_id);
+
+        const ownerSocket = req.connectedUsers[spot.user];
+
+        if (ownerSocket) {
+            req.io
+                .to(ownerSocket)
+                .emit("booking_request", { ...booking._doc, user, spot });
+        }
+
+        return res.json({ ...booking._doc, user, spot });
     }
 };

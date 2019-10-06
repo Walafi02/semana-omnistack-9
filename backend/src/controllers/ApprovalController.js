@@ -1,4 +1,5 @@
 const Booking = require("./../models/Booking");
+const Spot = require("./../models/Spot");
 
 module.exports = {
     async store(req, res) {
@@ -6,11 +7,20 @@ module.exports = {
 
         const booking = await Booking.findById(booking_id);
 
-        console.log(booking);
         booking.approved = true;
 
         await booking.save();
 
-        return res.json(booking);
+        const bookingUserSocket = req.connectedUsers[booking.user];
+
+        const spot = await Spot.findById(booking.spot);
+
+        if (bookingUserSocket) {
+            req.io
+                .to(bookingUserSocket)
+                .emit("booking_response", { ...booking._doc, spot });
+        }
+
+        return res.json({ ...booking._doc, spot });
     }
 };

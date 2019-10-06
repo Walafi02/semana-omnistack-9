@@ -14,8 +14,6 @@ module.exports = {
             date
         });
 
-        // await booking.populate("spot").execPopulate();
-        // .populate("user")
 
         const spot = await Spot.findById(spot_id);
         const user = await User.findById(user_id);

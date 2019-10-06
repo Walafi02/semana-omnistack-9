@@ -19,7 +19,7 @@ const SpotSchema = new mongoose.Schema(
 );
 
 SpotSchema.virtual("thumbnail_url").get(function() {
-    return `http://192.168.1.111:3333/files/${this.thumbnail}`;
+    return `http://10.0.0.112:3333/files/${this.thumbnail}`;
 });
 
 module.exports = mongoose.model("Sport", SpotSchema);

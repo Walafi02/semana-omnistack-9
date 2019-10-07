@@ -12,7 +12,8 @@ const server = http.Server(app);
 const io = socketio(server);
 
 mongoose.connect(
-    "mongodb+srv://walafi:walafi@cluster0-xgwbk.mongodb.net/semana09?retryWrites=true&w=majority",
+    // "mongodb+srv://walafi:walafi@cluster0-xgwbk.mongodb.net/semana09?retryWrites=true&w=majority",
+    "mongodb://127.0.0.1:27017/semana09",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true

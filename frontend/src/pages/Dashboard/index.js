@@ -38,11 +38,11 @@ export default function Dashboard() {
     }, []);
 
     async function handleAccept(id) {
-        const response = await api.post(`/bookings/${id}/approval`);
+        await api.post(`/bookings/${id}/approval`);
         setRequests(requests.filter(request => request._id !== id));
     }
     async function handleReject(id) {
-        const response = await api.post(`/bookings/${id}/rejections`);
+        await api.post(`/bookings/${id}/rejections`);
         setRequests(requests.filter(request => request._id !== id));
     }
 
